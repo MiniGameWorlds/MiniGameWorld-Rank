@@ -4,16 +4,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.Files;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.api.MiniGameWorld;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
 import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
 import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
+import com.worldbiomusic.minigameworldrank.data.PlayerData;
+import com.worldbiomusic.minigameworldrank.data.RankData;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class MiniGameRankManager implements MiniGameObserver {
 	private JavaPlugin plugin;
@@ -46,11 +52,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
 		// save rank data
 		if (event == MiniGameEvent.FINISH) {
-			this.rankList.forEach(rank -> {
-				if (rank.getMinigame().getClassName().equals(minigame.getClassName())) {
-					rank.saveRank();
-				}
-			});
+			saveRank(minigame);
 		}
 		// load exist minigame rank data (if not exist, create new config)
 		else if (event == MiniGameEvent.REGISTRATION) {
@@ -73,6 +75,44 @@ public class MiniGameRankManager implements MiniGameObserver {
 				this.rankList.remove(rank);
 			}
 		}
+	}
+
+	private void saveRank(MiniGameAccessor minigame) {
+		Utils.debug("save rank");
+		MiniGameRank minigameRank = null;
+
+		// save rank
+		for (MiniGameRank rank : this.rankList) {
+			if (rank.getMinigame().getClassName().equals(minigame.getClassName())) {
+				minigameRank = rank;
+				rank.saveRank();
+			}
+		}
+
+		// print rank
+		for (MiniGameRankComparable team : minigame.getRank()) {
+			RankData rankData = minigameRank.getPlayersRankData(team.getPlayers());
+			printSurroundRanks(minigameRank, rankData, team.getPlayers());
+		}
+	}
+
+	private void printSurroundRanks(MiniGameRank minigameRank, RankData teamRankData, List<Player> teamPlayers) {
+		Utils.debug("print ranks");
+
+		int teamRank = teamRankData.getRank();
+		List<RankData> surroundRankData = new ArrayList<>();
+		for (int i = teamRank - 2; i < teamRank + 3; i++) {
+			int listIndex = i - 1;
+			if (0 <= listIndex && listIndex < minigameRank.getRankData().size()) {
+				surroundRankData.add(minigameRank.getRankData().get(listIndex));
+			}
+		}
+
+		teamPlayers.forEach(p -> {
+			p.sendMessage(ChatColor.BOLD + "[Rank]");
+			surroundRankData.forEach(r -> p.sendMessage(r.toString()));
+		});
+
 	}
 
 	public void removeNotExistMiniGameRankConfig() {

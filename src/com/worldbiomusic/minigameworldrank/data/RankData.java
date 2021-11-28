@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
@@ -98,8 +99,18 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String playerString = "";
+		for (PlayerData pData : getPlayers()) {
+			playerString += pData.getName() + ", ";
+		}
+
+		playerString = playerString.substring(0, playerString.length() - 2);
+
+		return String.format("[%d] %s: %d", getRank(), playerString, ChatColor.GOLD + "" + getScore());
+	}
 
 }
 

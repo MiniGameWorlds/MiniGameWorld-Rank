@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.util.Utils;
 
 public class MiniGameRank implements YamlMember {
 	private MiniGameAccessor minigame;
@@ -20,6 +22,20 @@ public class MiniGameRank implements YamlMember {
 	public MiniGameRank(MiniGameAccessor minigame) {
 		this.minigame = minigame;
 		this.rankData = new ArrayList<>();
+	}
+
+	public List<RankData> getRankData() {
+		return this.rankData;
+	}
+
+	public RankData getPlayersRankData(List<Player> players) {
+		for (RankData rankData : this.rankData) {
+			// if players team
+			if (rankData.isSamePlayers(players)) {
+				return rankData;
+			}
+		}
+		return null;
 	}
 
 	public void saveRank() {
@@ -47,6 +63,7 @@ public class MiniGameRank implements YamlMember {
 				if (oldRank.isSamePlayers(newRank.getPlayers())) {
 					// if new rank score is bigger than old rank score
 					if (newRank.getScore() > oldRank.getScore()) {
+						Utils.debug("renew");
 						this.rankData.remove(oldRank);
 						this.rankData.add(new RankData(newRank));
 					}
@@ -56,6 +73,7 @@ public class MiniGameRank implements YamlMember {
 
 			// if rank with the same players not exist
 			this.rankData.add(new RankData(newRank));
+			Utils.debug("just new");
 		}
 	}
 
