@@ -18,6 +18,7 @@ import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
+import com.worldbiomusic.minigameworldrank.util.Setting;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -101,7 +102,8 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 		int teamRank = teamRankData.getRank();
 		List<RankData> surroundRankData = new ArrayList<>();
-		for (int i = teamRank - 2; i < teamRank + 3; i++) {
+		for (int i = teamRank - Setting.SURROUNDED_UP_RANK_COUNT; i < teamRank
+				+ Setting.SURROUNDED_DOWN_RANK_COUNT + 1; i++) {
 			int listIndex = i - 1;
 			if (0 <= listIndex && listIndex < minigameRank.getRankData().size()) {
 				surroundRankData.add(minigameRank.getRankData().get(listIndex));
@@ -109,7 +111,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 		}
 
 		teamPlayers.forEach(p -> {
-			p.sendMessage(ChatColor.BOLD + "[Rank]");
+			p.sendMessage(ChatColor.BOLD + "\n[Rank]");
 			surroundRankData.forEach(r -> p.sendMessage(r.toString()));
 		});
 

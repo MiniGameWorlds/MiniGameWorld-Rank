@@ -109,7 +109,7 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 
 		playerString = playerString.substring(0, playerString.length() - 2);
 
-		return String.format("[%d] %s: %d", getRank(), playerString, ChatColor.GOLD + "" + getScore());
+		return String.format("[%d] %s: " + ChatColor.GOLD + "%d", getRank(), playerString, getScore());
 	}
 
 }

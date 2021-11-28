@@ -11,6 +11,7 @@ import com.wbm.plugin.util.data.yaml.YamlHelper;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
 import com.wbm.plugin.util.instance.BackupDataManager;
+import com.worldbiomusic.minigameworldrank.util.Setting;
 
 public class DataManger implements YamlMember {
 	private JavaPlugin plugin;
@@ -20,26 +21,39 @@ public class DataManger implements YamlMember {
 	private int saveBackupDataDelay;
 
 	public DataManger(JavaPlugin plugin, YamlManager yamlManager) {
+		this.data = new HashMap<>();
 
 		this.plugin = plugin;
 		this.backupDataManager = new BackupDataManager(this.plugin);
 		this.yamlManager = yamlManager;
-		
+
 		initData();
+
+		// register this to YamlManager
+		this.yamlManager.registerMember(this);
 
 		startSavingDataTask();
 		this.backupDataManager.startSavingBackupDataTask(this.saveBackupDataDelay);
 	}
 
 	private void initData() {
-		this.data = new HashMap<>();
 
 		if (!this.data.containsKey("save-backup-data-delay")) {
 			this.data.put("save-backup-data-delay", 60);
 		}
 		this.saveBackupDataDelay = (int) this.data.get("save-backup-data-delay");
+
+		if (!this.data.containsKey("surrounded-up-rank-count")) {
+			this.data.put("surrounded-up-rank-count", Setting.SURROUNDED_UP_RANK_COUNT);
+		}
+		Setting.SURROUNDED_UP_RANK_COUNT = (int) this.data.get("surrounded-up-rank-count");
+
+		if (!this.data.containsKey("surrounded-down-rank-count")) {
+			this.data.put("surrounded-down-rank-count", Setting.SURROUNDED_DOWN_RANK_COUNT);
+		}
+		Setting.SURROUNDED_DOWN_RANK_COUNT = (int) this.data.get("surrounded-down-rank-count");
 	}
-	
+
 	public void saveBackupData() {
 		this.backupDataManager.saveBackupData();
 	}
@@ -70,7 +84,7 @@ public class DataManger implements YamlMember {
 		}
 
 		config.set("data", this.data);
-		
+
 		initData();
 	}
 }
