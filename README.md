@@ -4,7 +4,7 @@
 # Features
 - Use `MiniGameWorld` API
 - Rank always save with highest score
-- Rank data access API
+- Rank data access API (READ-ONLY)
 - Auto backup
 - Only manage exist minigame rank data with config file(delete removed minigame rank config automatically)
 - config: settings.yml, data/<minigame>.yml

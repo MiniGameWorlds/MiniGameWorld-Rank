@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.util.Utils;
+import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
 import com.worldbiomusic.minigameworldrank.listener.CommonListener;
@@ -35,6 +36,9 @@ public class MiniGameWorldRankMain extends JavaPlugin {
 		this.commonListener = new CommonListener(this.rankManager);
 		getServer().getPluginManager().registerEvents(this.commonListener, this);
 
+		// Init API
+		MiniGameWorldRank mwRank = MiniGameWorldRank.create();
+		mwRank.setMiniGameManager(this.rankManager);
 	}
 
 	@Override

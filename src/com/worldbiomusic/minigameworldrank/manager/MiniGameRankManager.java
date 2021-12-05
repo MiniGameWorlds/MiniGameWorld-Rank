@@ -23,6 +23,7 @@ import com.worldbiomusic.minigameworldrank.util.Setting;
 import net.md_5.bungee.api.ChatColor;
 
 public class MiniGameRankManager implements MiniGameObserver {
+
 	private JavaPlugin plugin;
 	private MiniGameWorld mw;
 	private YamlManager yamlManager;
@@ -153,6 +154,19 @@ public class MiniGameRankManager implements MiniGameObserver {
 				}
 			}
 		}
+	}
+
+	public List<MiniGameRank> getMiniGameRankList() {
+		return this.rankList;
+	}
+
+	public MiniGameRank getMiniGameRank(MiniGameAccessor accessor) {
+		for (MiniGameRank rank : this.rankList) {
+			if (rank.getMinigame().equals(accessor)) {
+				return rank;
+			}
+		}
+		return null;
 	}
 }
 //
