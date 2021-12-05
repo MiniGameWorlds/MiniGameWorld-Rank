@@ -8,6 +8,7 @@ import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
+import com.worldbiomusic.minigameworldrank.listener.CommonListener;
 import com.worldbiomusic.minigameworldrank.manager.DataManger;
 import com.worldbiomusic.minigameworldrank.manager.MiniGameRankManager;
 
@@ -15,6 +16,7 @@ public class MiniGameWorldRankMain extends JavaPlugin {
 	private MiniGameRankManager rankManager;
 	private YamlManager yamlManager;
 	private DataManger dataManger;
+	private CommonListener commonListener;
 
 	@Override
 	public void onEnable() {
@@ -30,6 +32,9 @@ public class MiniGameWorldRankMain extends JavaPlugin {
 
 		this.rankManager = new MiniGameRankManager(this, this.yamlManager);
 		this.dataManger = new DataManger(this, this.yamlManager);
+		this.commonListener = new CommonListener(this.rankManager);
+		getServer().getPluginManager().registerEvents(this.commonListener, this);
+
 	}
 
 	@Override

@@ -102,8 +102,8 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 		int teamRank = teamRankData.getRank();
 		List<RankData> surroundRankData = new ArrayList<>();
-		for (int i = teamRank - Setting.SURROUNDED_UP_RANK_COUNT; i < teamRank
-				+ Setting.SURROUNDED_DOWN_RANK_COUNT + 1; i++) {
+		for (int i = teamRank - Setting.SURROUNDED_UP_RANK_COUNT; i < teamRank + Setting.SURROUNDED_DOWN_RANK_COUNT
+				+ 1; i++) {
 			int listIndex = i - 1;
 			if (0 <= listIndex && listIndex < minigameRank.getRankData().size()) {
 				surroundRankData.add(minigameRank.getRankData().get(listIndex));
@@ -134,26 +134,27 @@ public class MiniGameRankManager implements MiniGameObserver {
 				allMiniGameString.add(minigameFile.getName());
 			}
 		}
+	}
 
+	/**
+	 * Sync player's name in all data config
+	 * 
+	 * @param p Player to sync name
+	 */
+	public void syncPlayerDataName(Player p) {
+		for (MiniGameRank rank : this.rankList) {
+			List<RankData> rankDataList = rank.getRankData();
+			for (RankData rankData : rankDataList) {
+				for (PlayerData pData : rankData.getPlayers()) {
+					// if player's name changed
+					if (p.getUniqueId().equals(pData.getUUID()) && !p.getName().equals(pData.getName())) {
+						pData.setName(p.getName());
+					}
+				}
+			}
+		}
 	}
 }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
