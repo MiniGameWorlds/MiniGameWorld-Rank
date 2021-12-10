@@ -9,6 +9,7 @@
 - Only manage exist minigame rank data with config file(delete removed minigame rank config automatically)
 - config: settings.yml, data/<minigame>.yml
 - Sync player name with uuid when join the server
+- Save rank data sorted by score
 
 # Print
 ```yaml
@@ -21,6 +22,15 @@
 
 # config
 ## settings.yml
+```yaml
+data:
+  save-backup-data-delay: 60
+  surrounded-up-rank-count: 2
+  surrounded-down-rank-count: 2
+```
+- ``: 
+- ``: 
+- ``: 
 
 ## data/<minigame>.yml
 ```yaml

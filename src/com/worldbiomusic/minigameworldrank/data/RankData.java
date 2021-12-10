@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
 
-public class RankData implements ConfigurationSerializable, Comparable<RankData> {
+public class RankData implements ConfigurationSerializable, Comparable<RankData>, Cloneable {
 	private int rank;
 	private int score;
 	private List<PlayerData> players;
@@ -110,6 +110,20 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 		playerString = playerString.substring(0, playerString.length() - 2);
 
 		return String.format("[%d] %s: " + ChatColor.GOLD + "%d", getRank(), playerString, getScore());
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		RankData rankData = (RankData) super.clone();
+
+		// copy PlayerData
+		List<PlayerData> copiedPlayers = new ArrayList<>();
+		for (PlayerData originPData : this.players) {
+			copiedPlayers.add((PlayerData) originPData.clone());
+		}
+		rankData.players = copiedPlayers;
+
+		return rankData;
 	}
 
 }

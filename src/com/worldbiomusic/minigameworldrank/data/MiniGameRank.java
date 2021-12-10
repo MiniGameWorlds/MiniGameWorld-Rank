@@ -43,7 +43,7 @@ public class MiniGameRank implements YamlMember {
 		checkWithExistRank();
 
 		// Renew ranks
-		renewRanks();
+		sortRankOrders();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MiniGameRank implements YamlMember {
 		}
 	}
 
-	private void renewRanks() {
+	public void sortRankOrders() {
 		// sort by score
 		Collections.sort(this.rankData);
 

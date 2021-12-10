@@ -62,6 +62,9 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 			this.rankList.add(rank);
 			this.yamlManager.registerMember(rank);
+			
+			// sort rank orders
+			rank.sortRankOrders();
 		} else if (event == MiniGameEvent.UNREGISTRATION) {
 			MiniGameRank rank = null;
 			for (MiniGameRank r : this.rankList) {
@@ -156,8 +159,9 @@ public class MiniGameRankManager implements MiniGameObserver {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<MiniGameRank> getMiniGameRankList() {
-		return this.rankList;
+		return (ArrayList<MiniGameRank>) ((ArrayList<MiniGameRank>) this.rankList).clone();
 	}
 
 	public MiniGameRank getMiniGameRank(MiniGameAccessor accessor) {

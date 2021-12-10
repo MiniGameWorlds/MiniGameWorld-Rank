@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
-public class PlayerData implements ConfigurationSerializable {
+public class PlayerData implements ConfigurationSerializable, Cloneable {
 
 	private String name;
 	private UUID uuid;
@@ -59,5 +59,10 @@ public class PlayerData implements ConfigurationSerializable {
 			return uuid.equals(((PlayerData) obj).uuid);
 		}
 		return false;
+	}
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return (PlayerData) super.clone();
 	}
 }
