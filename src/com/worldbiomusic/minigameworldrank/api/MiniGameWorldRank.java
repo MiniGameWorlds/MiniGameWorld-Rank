@@ -9,6 +9,7 @@ import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.data.RankData;
 import com.worldbiomusic.minigameworldrank.manager.MiniGameRankManager;
+import com.worldbiomusic.minigameworldrank.observer.MiniGameRankObserver;
 
 /**
  * MiniGameRank API <br>
@@ -55,12 +56,8 @@ public class MiniGameWorldRank {
 		MiniGameRank rank = this.rankManager.getMiniGameRank(accessor);
 		List<RankData> rankDataListClone = new ArrayList<>();
 
-		try {
-			for (RankData rankData : rank.getRankData()) {
-				rankDataListClone.add((RankData) rankData.clone());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		for (RankData rankData : rank.getRankData()) {
+			rankDataListClone.add((RankData) rankData.clone());
 		}
 
 		return rankDataListClone;
@@ -80,6 +77,26 @@ public class MiniGameWorldRank {
 	 */
 	public void syncPlayerDataName(Player p) {
 		this.rankManager.syncPlayerDataName(p);
+	}
+
+	/**
+	 * Registers a rank observer
+	 * 
+	 * @param obs Observer to register
+	 * @see {@link MiniGameRankObserver}
+	 */
+	public void registerRankObserver(MiniGameRankObserver obs) {
+		this.rankManager.registerObserver(obs);
+	}
+
+	/**
+	 * Unregisters a rank observer
+	 * 
+	 * @param obs Observer to unregister
+	 * @see {@link MiniGameRankObserver}
+	 */
+	public void unregisterRankObserver(MiniGameRankObserver obs) {
+		this.rankManager.unregisterObserver(obs);
 	}
 }
 

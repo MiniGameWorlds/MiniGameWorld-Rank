@@ -113,16 +113,21 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
-		RankData rankData = (RankData) super.clone();
+	public Object clone() {
+		RankData rankData = null;
+		try {
+			rankData = (RankData) super.clone();
 
-		// copy PlayerData
-		List<PlayerData> copiedPlayers = new ArrayList<>();
-		for (PlayerData originPData : this.players) {
-			copiedPlayers.add((PlayerData) originPData.clone());
+			// copy PlayerData
+			List<PlayerData> copiedPlayers = new ArrayList<>();
+			for (PlayerData originPData : this.players) {
+				copiedPlayers.add((PlayerData) originPData.clone());
+			}
+			rankData.players = copiedPlayers;
+
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
 		}
-		rankData.players = copiedPlayers;
-
 		return rankData;
 	}
 

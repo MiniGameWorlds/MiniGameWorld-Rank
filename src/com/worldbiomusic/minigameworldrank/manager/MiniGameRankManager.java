@@ -18,16 +18,19 @@ import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
+import com.worldbiomusic.minigameworldrank.observer.MiniGameRankNotifier;
+import com.worldbiomusic.minigameworldrank.observer.MiniGameRankObserver;
 import com.worldbiomusic.minigameworldrank.util.Setting;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class MiniGameRankManager implements MiniGameObserver {
+public class MiniGameRankManager implements MiniGameObserver, MiniGameRankNotifier {
 
 	private JavaPlugin plugin;
 	private MiniGameWorld mw;
 	private YamlManager yamlManager;
 	private List<MiniGameRank> rankList;
+	private List<MiniGameRankObserver> rankObserverList;
 
 	public MiniGameRankManager(JavaPlugin plugin, YamlManager yamlManager) {
 		/*
@@ -38,6 +41,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 		this.plugin = plugin;
 		this.rankList = new ArrayList<>();
+		this.rankObserverList = new ArrayList<>();
 
 		this.yamlManager = yamlManager;
 
@@ -55,6 +59,9 @@ public class MiniGameRankManager implements MiniGameObserver {
 		// save rank data
 		if (event == MiniGameEvent.FINISH) {
 			saveRank(minigame);
+
+			// notify rank observers
+			notifyObservers(minigame, RankEvent.AFTER_DATA_SAVED);
 		}
 		// load exist minigame rank data (if not exist, create new config)
 		else if (event == MiniGameEvent.REGISTRATION) {
@@ -62,7 +69,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 			this.rankList.add(rank);
 			this.yamlManager.registerMember(rank);
-			
+
 			// sort rank orders
 			rank.sortRankOrders();
 		} else if (event == MiniGameEvent.UNREGISTRATION) {
@@ -88,7 +95,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 
 		// save rank
 		for (MiniGameRank rank : this.rankList) {
-			if (rank.getMinigame().getClassName().equals(minigame.getClassName())) {
+			if (rank.getMinigame().equals(minigame)) {
 				minigameRank = rank;
 				rank.saveRank();
 			}
@@ -171,6 +178,23 @@ public class MiniGameRankManager implements MiniGameObserver {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void registerObserver(MiniGameRankObserver observer) {
+		if (!this.rankObserverList.contains(observer)) {
+			this.rankObserverList.add(observer);
+		}
+	}
+
+	@Override
+	public void unregisterObserver(MiniGameRankObserver observer) {
+		this.rankObserverList.remove(observer);
+	}
+
+	@Override
+	public void notifyObservers(MiniGameAccessor minigame, RankEvent event) {
+		this.rankObserverList.forEach(obs -> obs.update(minigame, event));
 	}
 }
 //
