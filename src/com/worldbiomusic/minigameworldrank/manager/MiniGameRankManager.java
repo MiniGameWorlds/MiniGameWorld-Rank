@@ -18,19 +18,16 @@ import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
-import com.worldbiomusic.minigameworldrank.observer.MiniGameRankNotifier;
-import com.worldbiomusic.minigameworldrank.observer.MiniGameRankObserver;
 import com.worldbiomusic.minigameworldrank.util.Setting;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class MiniGameRankManager implements MiniGameObserver, MiniGameRankNotifier {
+public class MiniGameRankManager implements MiniGameObserver {
 
 	private JavaPlugin plugin;
 	private MiniGameWorld mw;
 	private YamlManager yamlManager;
 	private List<MiniGameRank> rankList;
-	private List<MiniGameRankObserver> rankObserverList;
 
 	public MiniGameRankManager(JavaPlugin plugin, YamlManager yamlManager) {
 		/*
@@ -41,7 +38,6 @@ public class MiniGameRankManager implements MiniGameObserver, MiniGameRankNotifi
 
 		this.plugin = plugin;
 		this.rankList = new ArrayList<>();
-		this.rankObserverList = new ArrayList<>();
 
 		this.yamlManager = yamlManager;
 
@@ -57,11 +53,9 @@ public class MiniGameRankManager implements MiniGameObserver, MiniGameRankNotifi
 	@Override
 	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
 		// save rank data
-		if (event == MiniGameEvent.FINISH) {
+		if (event == MiniGameEvent.BEFORE_FINISH) {
 			saveRank(minigame);
 
-			// notify rank observers
-			notifyObservers(minigame, RankEvent.AFTER_DATA_SAVED);
 		}
 		// load exist minigame rank data (if not exist, create new config)
 		else if (event == MiniGameEvent.REGISTRATION) {
@@ -180,22 +174,6 @@ public class MiniGameRankManager implements MiniGameObserver, MiniGameRankNotifi
 		return null;
 	}
 
-	@Override
-	public void registerObserver(MiniGameRankObserver observer) {
-		if (!this.rankObserverList.contains(observer)) {
-			this.rankObserverList.add(observer);
-		}
-	}
-
-	@Override
-	public void unregisterObserver(MiniGameRankObserver observer) {
-		this.rankObserverList.remove(observer);
-	}
-
-	@Override
-	public void notifyObservers(MiniGameAccessor minigame, RankEvent event) {
-		this.rankObserverList.forEach(obs -> obs.update(minigame, event));
-	}
 }
 //
 //

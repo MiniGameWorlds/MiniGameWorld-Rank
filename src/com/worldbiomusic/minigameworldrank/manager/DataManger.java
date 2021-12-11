@@ -74,10 +74,6 @@ public class DataManger implements YamlMember {
 	}
 
 	@Override
-	public void reload() {
-	}
-
-	@Override
 	public void setData(YamlManager yamlManager, FileConfiguration config) {
 		if (config.isSet("data")) {
 			this.data = YamlHelper.ObjectToMap(config.getConfigurationSection("data"));

@@ -15,8 +15,8 @@ import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankCompar
 import com.worldbiomusic.minigameworld.util.Utils;
 
 public class MiniGameRank implements YamlMember {
+
 	private MiniGameAccessor minigame;
-	private YamlManager yamlManager;
 	private List<RankData> rankData;
 
 	public MiniGameRank(MiniGameAccessor minigame) {
@@ -96,15 +96,9 @@ public class MiniGameRank implements YamlMember {
 		return "data" + File.separator + minigame.getClassName() + ".yml";
 	}
 
-	@Override
-	public void reload() {
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setData(YamlManager yamlManager, FileConfiguration config) {
-		this.yamlManager = yamlManager;
-
 		if (config.isSet("data")) {
 //			this.data = YamlHelper.ObjectToMap(config.getConfigurationSection("data"));
 			this.rankData = (List<RankData>) config.getList("data");

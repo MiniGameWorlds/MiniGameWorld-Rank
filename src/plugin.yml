@@ -5,3 +5,7 @@ author: worldbiomusic
 description: minigame rank plugin of MiniGameWorld 
 api-version: 1.14
 depend: [MiniGameWorld]
+
+commands:
+  rank:
+    aliases: [ra]
