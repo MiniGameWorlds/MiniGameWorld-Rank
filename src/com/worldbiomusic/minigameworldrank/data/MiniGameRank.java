@@ -11,8 +11,7 @@ import org.bukkit.entity.Player;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
-import com.worldbiomusic.minigameworld.util.Utils;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 
 public class MiniGameRank implements YamlMember {
 
@@ -54,16 +53,15 @@ public class MiniGameRank implements YamlMember {
 	 * 3. remove exist rank data and add new rank data<br>
 	 */
 	private void checkWithExistRank() {
-		List<? extends MiniGameRankComparable> gameRanks = this.minigame.getRank();
+		List<? extends MiniGameRankResult> gameRanks = this.minigame.getRank();
 
-		OUT: for (MiniGameRankComparable newRank : gameRanks) {
+		OUT: for (MiniGameRankResult newRank : gameRanks) {
 
 			for (RankData oldRank : this.rankData) {
 				// if rank with the same players exist
 				if (oldRank.isSamePlayers(newRank.getPlayers())) {
 					// if new rank score is bigger than old rank score
 					if (newRank.getScore() > oldRank.getScore()) {
-						Utils.debug("renew");
 						this.rankData.remove(oldRank);
 						this.rankData.add(new RankData(newRank));
 					}
@@ -73,7 +71,6 @@ public class MiniGameRank implements YamlMember {
 
 			// if rank with the same players not exist
 			this.rankData.add(new RankData(newRank));
-			Utils.debug("just new");
 		}
 	}
 

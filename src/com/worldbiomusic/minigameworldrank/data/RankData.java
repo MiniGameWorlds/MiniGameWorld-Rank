@@ -9,20 +9,47 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 
+/**
+ * Contains rank in the config, score, played players<br>
+ * Sorted by score when a pluing loaded or new RankData saved
+ */
 public class RankData implements ConfigurationSerializable, Comparable<RankData>, Cloneable {
+	/**
+	 * Rank in the config files
+	 */
 	private int rank;
+
+	/**
+	 * Score
+	 */
 	private int score;
+
+	/**
+	 * Played player list
+	 */
 	private List<PlayerData> players;
 
-	public RankData(MiniGameRankComparable comp) {
+	/**
+	 * Extracts info from MiniGameRankComparable
+	 * 
+	 * @param comp MiniGameRankComparable
+	 */
+	public RankData(MiniGameRankResult comp) {
 		this.rank = 0;
 		this.score = comp.getScore();
 		this.players = new ArrayList<>();
 		comp.getPlayers().forEach(p -> this.players.add(new PlayerData(p)));
 	}
 
+	/**
+	 * For serialization constructor
+	 * 
+	 * @param rank
+	 * @param score
+	 * @param players
+	 */
 	public RankData(int rank, int score, List<PlayerData> players) {
 		this.rank = rank;
 		this.score = score;
@@ -38,6 +65,12 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 		return data;
 	}
 
+	/**
+	 * Deserialize method
+	 * 
+	 * @param data
+	 * @return
+	 */
 	public static RankData deserialize(Map<String, Object> data) {
 		int rank = (int) data.get("rank");
 		int score = (int) data.get("score");
@@ -47,18 +80,38 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 		return new RankData(rank, score, players);
 	}
 
+	/**
+	 * Gets rank
+	 * 
+	 * @return Rank
+	 */
 	public int getRank() {
 		return rank;
 	}
 
+	/**
+	 * Sets Rank (with API, not applied)
+	 * 
+	 * @param rank Rank
+	 */
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
 
+	/**
+	 * Gets played player list
+	 * 
+	 * @return Player list
+	 */
 	public List<PlayerData> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * Gets score
+	 * 
+	 * @return
+	 */
 	public int getScore() {
 		return score;
 	}
@@ -68,6 +121,12 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 		return other.getScore() - getScore();
 	}
 
+	/**
+	 * Check this rank data is related with a player
+	 * 
+	 * @param p Player to check
+	 * @return True if rank data related with a player
+	 */
 	public boolean containsPlayer(Player p) {
 		if (p == null) {
 			return false;
@@ -82,6 +141,12 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 		return false;
 	}
 
+	/**
+	 * Check this rank data is related with this all players
+	 * 
+	 * @param otherPlayers Players to check
+	 * @return True if all of players are related with the rank data
+	 */
 	public boolean isSamePlayers(List<Player> otherPlayers) {
 		// check players count
 		if (this.players.size() != otherPlayers.size()) {

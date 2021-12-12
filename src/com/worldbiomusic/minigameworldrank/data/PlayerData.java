@@ -7,9 +7,20 @@ import java.util.UUID;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
+/**
+ * Can gets player's name, uuid<br>
+ * [IMPORTANT] player's name in all config data can be changed when
+ * <code>MiniGameWorldRank#syncPlayerDataName()</code> is called
+ */
 public class PlayerData implements ConfigurationSerializable, Cloneable {
 
+	/**
+	 * Player's name
+	 */
 	private String name;
+	/**
+	 * Player's fixed Unique ID
+	 */
 	private UUID uuid;
 
 	public PlayerData(Player player) {
@@ -30,6 +41,12 @@ public class PlayerData implements ConfigurationSerializable, Cloneable {
 		return data;
 	}
 
+	/**
+	 * For deserialization
+	 * 
+	 * @param data
+	 * @return
+	 */
 	public static PlayerData deserialize(Map<String, Object> data) {
 		String name = (String) data.get("name");
 		UUID uuid = UUID.fromString((String) data.get("uuid"));
@@ -37,14 +54,29 @@ public class PlayerData implements ConfigurationSerializable, Cloneable {
 		return new PlayerData(name, uuid);
 	}
 
+	/**
+	 * Gets player name
+	 * 
+	 * @return Player name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets player name
+	 * 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Gets player UUID
+	 * 
+	 * @return
+	 */
 	public UUID getUUID() {
 		return uuid;
 	}

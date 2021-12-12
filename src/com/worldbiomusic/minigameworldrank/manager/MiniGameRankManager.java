@@ -11,7 +11,7 @@ import com.google.common.io.Files;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.api.MiniGameWorld;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
 import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.util.Utils;
@@ -55,7 +55,6 @@ public class MiniGameRankManager implements MiniGameObserver {
 		// save rank data
 		if (event == MiniGameEvent.BEFORE_FINISH) {
 			saveRank(minigame);
-
 		}
 		// load exist minigame rank data (if not exist, create new config)
 		else if (event == MiniGameEvent.REGISTRATION) {
@@ -84,7 +83,6 @@ public class MiniGameRankManager implements MiniGameObserver {
 	}
 
 	private void saveRank(MiniGameAccessor minigame) {
-		Utils.debug("save rank");
 		MiniGameRank minigameRank = null;
 
 		// save rank
@@ -96,14 +94,13 @@ public class MiniGameRankManager implements MiniGameObserver {
 		}
 
 		// print rank
-		for (MiniGameRankComparable team : minigame.getRank()) {
+		for (MiniGameRankResult team : minigame.getRank()) {
 			RankData rankData = minigameRank.getPlayersRankData(team.getPlayers());
 			printSurroundRanks(minigameRank, rankData, team.getPlayers());
 		}
 	}
 
 	private void printSurroundRanks(MiniGameRank minigameRank, RankData teamRankData, List<Player> teamPlayers) {
-		Utils.debug("print ranks");
 
 		int teamRank = teamRankData.getRank();
 		List<RankData> surroundRankData = new ArrayList<>();
@@ -131,7 +128,7 @@ public class MiniGameRankManager implements MiniGameObserver {
 		for (File minigameFile : rankDataFolder.listFiles()) {
 			String flieName = Files.getNameWithoutExtension(minigameFile.getName());
 			if (!allMiniGameString.contains(flieName)) {
-				Utils.debug("Delete mingame rank config: " + flieName);
+				Utils.warning("Delete mingame rank config: " + flieName);
 
 				// remove file
 				minigameFile.delete();

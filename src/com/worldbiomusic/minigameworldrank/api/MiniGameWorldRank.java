@@ -12,8 +12,8 @@ import com.worldbiomusic.minigameworldrank.manager.MiniGameRankManager;
 
 /**
  * MiniGameRank API <br>
- * [IMPORTANT] This plugin always works with latest MiniGameWorld API version
- * {@link com.worldbiomusic.minigameworld#MiniGameWorld}
+ * [IMPORTANT] This plugin always use latest MiniGameWorld API version
+ * {@see com.worldbiomusic.minigameworld.MiniGameWorld}
  *
  */
 public class MiniGameWorldRank {
@@ -50,6 +50,7 @@ public class MiniGameWorldRank {
 	 * 
 	 * @param accessor MiniGame
 	 * @return RankData List
+	 * @see RankData
 	 */
 	public List<RankData> getRankDataList(MiniGameAccessor accessor) {
 		MiniGameRank rank = this.rankManager.getMiniGameRank(accessor);

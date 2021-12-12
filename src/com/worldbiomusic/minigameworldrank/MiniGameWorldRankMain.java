@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
-import com.worldbiomusic.minigameworldrank.command.Commands;
+import com.worldbiomusic.minigameworldrank.cmd.Commands;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
 import com.worldbiomusic.minigameworldrank.data.RankData;
 import com.worldbiomusic.minigameworldrank.listener.CommonListener;
