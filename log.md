@@ -12,6 +12,11 @@
 - Add `reload`, `save` command
 - Javadoc
 
+## 1.1
+- Update for API 0.4.0
+
+
+
 ---
 
 
@@ -24,3 +29,7 @@
 - Github page (API doc)
 - Extract api doc
 - Release 1.0
+
+# 2022-01-19
+- Update for API 0.4.0
+- Release `1.1`
