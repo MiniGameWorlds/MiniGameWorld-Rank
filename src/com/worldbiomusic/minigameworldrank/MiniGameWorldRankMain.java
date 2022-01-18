@@ -45,6 +45,9 @@ public class MiniGameWorldRankMain extends JavaPlugin {
 		// Init API
 		MiniGameWorldRank mwRank = MiniGameWorldRank.create();
 		mwRank.setMiniGameManager(this.rankManager);
+
+		// register listener
+		getServer().getPluginManager().registerEvents(this.rankManager, this);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.Files;
@@ -12,6 +14,7 @@ import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.api.MiniGameWorld;
 import com.worldbiomusic.minigameworld.api.observer.MiniGameEventNotifier.MiniGameEvent;
+import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
 import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworld.util.Utils;
@@ -22,7 +25,7 @@ import com.worldbiomusic.minigameworldrank.util.Setting;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class MiniGameRankManager implements MiniGameObserver {
+public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 	private JavaPlugin plugin;
 	private MiniGameWorld mw;
@@ -50,14 +53,21 @@ public class MiniGameRankManager implements MiniGameObserver {
 		this.yamlManager.saveAllData();
 	}
 
+	/**
+	 * Save rank when finish
+	 * 
+	 * @param e Event when a minigame has finished
+	 */
+	@EventHandler
+	public void onMiniGameFinish(MiniGameFinishEvent e) {
+		MiniGameAccessor minigame = e.getMiniGame();
+		saveRank(minigame);
+	}
+
 	@Override
 	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
-		// save rank data
-		if (event == MiniGameEvent.BEFORE_FINISH) {
-			saveRank(minigame);
-		}
 		// load exist minigame rank data (if not exist, create new config)
-		else if (event == MiniGameEvent.REGISTRATION) {
+		if (event == MiniGameEvent.REGISTRATION) {
 			MiniGameRank rank = new MiniGameRank(minigame);
 
 			this.rankList.add(rank);
