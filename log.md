@@ -33,3 +33,7 @@
 # 2022-01-19
 - Update for API 0.4.0
 - Release `1.1`
+
+# 2022-02-20
+- Add BStats
+- Release `1.2`

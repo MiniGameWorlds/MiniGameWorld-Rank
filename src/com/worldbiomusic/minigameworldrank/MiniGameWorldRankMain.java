@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.wbm.plugin.util.Metrics;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
@@ -26,6 +27,9 @@ public class MiniGameWorldRankMain extends JavaPlugin {
 		super.onEnable();
 
 		Utils.info(ChatColor.GREEN + "MiniGameWorldRankMain ON");
+		
+		// bstats
+		new Metrics(this, 14384);
 
 		// register custom ConfigurationSerializables
 		ConfigurationSerialization.registerClass(PlayerData.class);
