@@ -9,8 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
-
 /**
  * Contains rank in the config, score, played players<br>
  * Sorted by score when a pluing loaded or new RankData saved
@@ -36,7 +34,7 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 	 * 
 	 * @param comp MiniGameRankComparable
 	 */
-	public RankData(MiniGameRankResult comp) {
+	public RankData(com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank comp) {
 		this.rank = 0;
 		this.score = comp.getScore();
 		this.players = new ArrayList<>();

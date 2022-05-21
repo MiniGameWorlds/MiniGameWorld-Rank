@@ -16,7 +16,6 @@ import com.worldbiomusic.minigameworld.api.MiniGameWorld;
 import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.api.observer.MiniGameTimingNotifier.Timing;
 import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.data.PlayerData;
@@ -104,7 +103,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 		}
 
 		// print rank
-		for (MiniGameRankResult team : minigame.getRank()) {
+		for (com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank team : minigame.getRank()) {
 			RankData rankData = minigameRank.getPlayersRankData(team.getPlayers());
 			printSurroundRanks(minigameRank, rankData, team.getPlayers());
 		}

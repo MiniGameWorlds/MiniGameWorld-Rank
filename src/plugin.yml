@@ -1,6 +1,6 @@
 name: MiniGameWorld-Rank
 main: com.worldbiomusic.minigameworldrank.MiniGameWorldRankMain
-version: 1.2
+version: 1.3
 author: worldbiomusic
 description: minigame rank plugin of MiniGameWorld 
 api-version: 1.14

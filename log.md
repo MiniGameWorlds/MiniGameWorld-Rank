@@ -1,24 +1,7 @@
 # TODO
 - Print player's best score when the game start 
 
-
-
 ---
-
-# Version Changes
-## 1.0
-- Save rank data
-- Sort rank orders when plugin loaded
-- Add `reload`, `save` command
-- Javadoc
-
-## 1.1
-- Update for API 0.4.0
-
-
-
----
-
 
 # 2021-12-11
 - Make MiniGameWorldRank API
@@ -37,3 +20,7 @@
 # 2022-02-20
 - Add BStats
 - Release `1.2`
+
+# 2022-05-21
+- Update for API updates
+- Release `1.3`
