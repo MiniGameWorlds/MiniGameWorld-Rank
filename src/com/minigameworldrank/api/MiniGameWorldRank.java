@@ -1,19 +1,19 @@
-package com.worldbiomusic.minigameworldrank.api;
+package com.minigameworldrank.api;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.entity.Player;
 
-import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
-import com.worldbiomusic.minigameworldrank.data.RankData;
-import com.worldbiomusic.minigameworldrank.manager.MiniGameRankManager;
+import com.minigameworldrank.data.MiniGameRank;
+import com.minigameworldrank.data.RankData;
+import com.minigameworldrank.manager.MiniGameRankManager;
+import com.minigameworld.api.MiniGameAccessor;
 
 /**
  * MiniGameRank API <br>
  * [IMPORTANT] This plugin always use latest MiniGameWorld API version
- * {@see com.worldbiomusic.minigameworld.MiniGameWorld}
+ * {@see com.minigameworld.MiniGameWorld}
  *
  */
 public class MiniGameWorldRank {

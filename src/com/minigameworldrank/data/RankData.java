@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.data;
+package com.minigameworldrank.data;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,7 +34,7 @@ public class RankData implements ConfigurationSerializable, Comparable<RankData>
 	 * 
 	 * @param comp MiniGameRankComparable
 	 */
-	public RankData(com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank comp) {
+	public RankData(com.minigameworld.frames.helpers.MiniGameRank comp) {
 		this.rank = 0;
 		this.score = comp.getScore();
 		this.players = new ArrayList<>();

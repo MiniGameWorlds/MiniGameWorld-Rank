@@ -37,7 +37,7 @@ MiniGameWorld mw = MiniGameWorld.create("x.x.x");
 MiniGameWorldRank minigameRank = MiniGameWorldRank.create();
 
 // get all minigame
-for (MiniGameAccessor minigame : mw.getMiniGameList()) {
+for (MiniGameAccessor minigame : mw.getTemplateGames()) {
   // get minigame rank data list
   List<RankData> rankDataList = minigameRank.getRankDataList(minigame);
   rankDataList.forEach(rank -> {
@@ -70,18 +70,18 @@ data:
 ## data/#minigame.yml
 ```yaml
 data:
-- ==: com.worldbiomusic.minigameworldrank.data.RankData
+- ==: com.minigameworldrank.data.RankData
   rank: 1
   score: 21
   players:
-  - ==: com.worldbiomusic.minigameworldrank.data.PlayerData
+  - ==: com.minigameworldrank.data.PlayerData
     name: worldbiomusic
     uuid: ae5f2897-0b94-4aeb-94a1-e2f8ed4a9544
-- ==: com.worldbiomusic.minigameworldrank.data.RankData
+- ==: com.minigameworldrank.data.RankData
   rank: 2
   score: 6
   players:
-  - ==: com.worldbiomusic.minigameworldrank.data.PlayerData
+  - ==: com.minigameworldrank.data.PlayerData
     name: Realniceness
     uuid: abe2212f-29cb-45fe-8da6-012c5ea0b799
 ```

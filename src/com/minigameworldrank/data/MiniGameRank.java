@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.data;
+package com.minigameworldrank.data;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,15 +10,15 @@ import org.bukkit.entity.Player;
 
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
-import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
+import com.minigameworld.api.MiniGameAccessor;
 
 public class MiniGameRank implements YamlMember {
 
-	private MiniGameAccessor minigame;
+	private MiniGameAccessor templateGame;
 	private List<RankData> rankData;
 
 	public MiniGameRank(MiniGameAccessor minigame) {
-		this.minigame = minigame;
+		this.templateGame = minigame;
 		this.rankData = new ArrayList<>();
 	}
 
@@ -36,9 +36,9 @@ public class MiniGameRank implements YamlMember {
 		return null;
 	}
 
-	public void saveRank() {
+	public void saveRank(MiniGameAccessor newGame) {
 		// check with exist rank
-		checkWithExistRank();
+		checkWithExistRank(newGame);
 
 		// Renew ranks
 		sortRankOrders();
@@ -51,10 +51,10 @@ public class MiniGameRank implements YamlMember {
 	 * 2-2. if this score < exist score: process <br>
 	 * 3. remove exist rank data and add new rank data<br>
 	 */
-	private void checkWithExistRank() {
-		List<? extends com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank> gameRanks = this.minigame.getRank();
+	private void checkWithExistRank(MiniGameAccessor newGame) {
+		List<? extends com.minigameworld.frames.helpers.MiniGameRank> gameRanks = newGame.getRank();
 
-		OUT: for (com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank newRank : gameRanks) {
+		OUT: for (com.minigameworld.frames.helpers.MiniGameRank newRank : gameRanks) {
 
 			for (RankData oldRank : this.rankData) {
 				// if rank with the same players exist
@@ -84,12 +84,12 @@ public class MiniGameRank implements YamlMember {
 	}
 
 	public MiniGameAccessor getMinigame() {
-		return this.minigame;
+		return this.templateGame;
 	}
 
 	@Override
 	public String getFileName() {
-		return "data" + File.separator + minigame.getClassName() + ".yml";
+		return "data" + File.separator + templateGame.getClassName() + ".yml";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,7 +110,7 @@ public class MiniGameRank implements YamlMember {
 		} else if (obj == null) {
 			return false;
 		} else if (getClass() == obj.getClass()) {
-			return this.minigame.equals(((MiniGameRank) obj).minigame);
+			return this.templateGame.isSameTemplate(((MiniGameRank) obj).templateGame);
 		}
 		return false;
 	}

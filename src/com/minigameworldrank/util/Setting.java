@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.util;
+package com.minigameworldrank.util;
 
 public class Setting {
 	public static int SURROUNDED_UP_RANK_COUNT = 2;

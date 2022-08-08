@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.manager;
+package com.minigameworldrank.manager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,17 +10,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.Files;
+import com.minigameworld.api.MiniGameAccessor;
+import com.minigameworld.api.MiniGameWorld;
+import com.minigameworld.api.observer.MiniGameObserver;
+import com.minigameworld.api.observer.MiniGameTimingNotifier.Timing;
+import com.minigameworld.events.minigame.MiniGameFinishEvent;
+import com.minigameworld.util.Utils;
+import com.minigameworldrank.data.MiniGameRank;
+import com.minigameworldrank.data.PlayerData;
+import com.minigameworldrank.data.RankData;
+import com.minigameworldrank.util.Setting;
 import com.wbm.plugin.util.data.yaml.YamlManager;
-import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.api.MiniGameWorld;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameTimingNotifier.Timing;
-import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
-import com.worldbiomusic.minigameworld.util.Utils;
-import com.worldbiomusic.minigameworldrank.data.MiniGameRank;
-import com.worldbiomusic.minigameworldrank.data.PlayerData;
-import com.worldbiomusic.minigameworldrank.data.RankData;
-import com.worldbiomusic.minigameworldrank.util.Setting;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -45,7 +45,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 		// LATEST
 		this.mw = MiniGameWorld.create(MiniGameWorld.API_VERSION);
-		this.mw.registerMiniGameObserver(this);
+		this.mw.registerObserver(this);
 	}
 
 	public void saveAllData() {
@@ -77,7 +77,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 		} else if (event == Timing.UNREGISTRATION) {
 			MiniGameRank rank = null;
 			for (MiniGameRank r : this.rankList) {
-				if (r.getMinigame().equals(minigame)) {
+				if (r.getMinigame().isSameTemplate(minigame)) {
 					rank = r;
 				}
 			}
@@ -96,14 +96,14 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 		// save rank
 		for (MiniGameRank rank : this.rankList) {
-			if (rank.getMinigame().equals(minigame)) {
+			if (rank.getMinigame().isSameTemplate(minigame)) {
 				minigameRank = rank;
-				rank.saveRank();
+				rank.saveRank(minigame);
 			}
 		}
 
 		// print rank
-		for (com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank team : minigame.getRank()) {
+		for (com.minigameworld.frames.helpers.MiniGameRank team : minigame.getRank()) {
 			RankData rankData = minigameRank.getPlayersRankData(team.getPlayers());
 			printSurroundRanks(minigameRank, rankData, team.getPlayers());
 		}
@@ -130,7 +130,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 	public void removeNotExistMiniGameRankConfig() {
 		List<String> allMiniGameString = new ArrayList<>();
-		this.mw.getMiniGameList().forEach(m -> allMiniGameString.add(m.getClassName()));
+		this.mw.getTemplateGames().forEach(m -> allMiniGameString.add(m.getClassName()));
 
 		File rankDataFolder = new File(this.plugin.getDataFolder(), "data");
 
@@ -173,7 +173,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 	public MiniGameRank getMiniGameRank(MiniGameAccessor accessor) {
 		for (MiniGameRank rank : this.rankList) {
-			if (rank.getMinigame().equals(accessor)) {
+			if (rank.getMinigame().isSameTemplate(accessor)) {
 				return rank;
 			}
 		}

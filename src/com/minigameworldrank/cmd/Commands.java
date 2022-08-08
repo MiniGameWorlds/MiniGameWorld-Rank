@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.cmd;
+package com.minigameworldrank.cmd;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

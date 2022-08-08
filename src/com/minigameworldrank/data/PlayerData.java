@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.data;
+package com.minigameworldrank.data;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

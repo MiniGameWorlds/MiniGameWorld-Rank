@@ -1,11 +1,11 @@
-package com.worldbiomusic.minigameworldrank.listener;
+package com.minigameworldrank.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.worldbiomusic.minigameworldrank.manager.MiniGameRankManager;
+import com.minigameworldrank.manager.MiniGameRankManager;
 
 public class CommonListener implements Listener {
 	private MiniGameRankManager rankManager;

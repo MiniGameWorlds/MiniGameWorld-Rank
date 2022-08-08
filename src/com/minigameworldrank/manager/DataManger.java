@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldrank.manager;
+package com.minigameworldrank.manager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,11 +7,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.minigameworldrank.util.Setting;
 import com.wbm.plugin.util.data.yaml.YamlHelper;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
 import com.wbm.plugin.util.instance.BackupDataManager;
-import com.worldbiomusic.minigameworldrank.util.Setting;
 
 public class DataManger implements YamlMember {
 	private JavaPlugin plugin;
