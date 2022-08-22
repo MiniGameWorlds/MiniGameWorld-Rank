@@ -52,7 +52,7 @@ public class MiniGameRank implements YamlMember {
 	 * 3. remove exist rank data and add new rank data<br>
 	 */
 	private void checkWithExistRank(MiniGameAccessor newGame) {
-		List<? extends com.minigameworld.frames.helpers.MiniGameRank> gameRanks = newGame.getRank();
+		List<? extends com.minigameworld.frames.helpers.MiniGameRank> gameRanks = newGame.rank();
 
 		OUT: for (com.minigameworld.frames.helpers.MiniGameRank newRank : gameRanks) {
 
@@ -89,7 +89,7 @@ public class MiniGameRank implements YamlMember {
 
 	@Override
 	public String getFileName() {
-		return "data" + File.separator + templateGame.getClassName() + ".yml";
+		return "data" + File.separator + templateGame.className() + ".yml";
 	}
 
 	@SuppressWarnings("unchecked")

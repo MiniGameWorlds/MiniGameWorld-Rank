@@ -103,7 +103,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 		}
 
 		// print rank
-		for (com.minigameworld.frames.helpers.MiniGameRank team : minigame.getRank()) {
+		for (com.minigameworld.frames.helpers.MiniGameRank team : minigame.rank()) {
 			RankData rankData = minigameRank.getPlayersRankData(team.getPlayers());
 			printSurroundRanks(minigameRank, rankData, team.getPlayers());
 		}
@@ -130,7 +130,7 @@ public class MiniGameRankManager implements MiniGameObserver, Listener {
 
 	public void removeNotExistMiniGameRankConfig() {
 		List<String> allMiniGameString = new ArrayList<>();
-		this.mw.getTemplateGames().forEach(m -> allMiniGameString.add(m.getClassName()));
+		this.mw.templateGames().forEach(m -> allMiniGameString.add(m.className()));
 
 		File rankDataFolder = new File(this.plugin.getDataFolder(), "data");
 

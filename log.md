@@ -24,3 +24,22 @@
 # 2022-05-21
 - Update for API updates
 - Release `1.3`
+
+# 2022-08-22
+- Update for API update
+- Release `1.4`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
